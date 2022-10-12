@@ -28,8 +28,11 @@ static consteval auto generate_answer() {
 
   std::array<int, max_idx + 1> ret{};
 
+  // Compile-time ERROR: Approx.ed ops count >= 100,000,000
   for (size_t i = 2; i <= max_idx; i++) {
     for (size_t j = i; j <= max_idx; j++) {
+      // i = ret[x], j = x - ret[x]
+      // | i-j | = | ret[x] - x + ret[x] | = 2*ret[i+j] - x
       if (i+j > max_idx)
         break;
       if ((i+j) & 1) // is odd
